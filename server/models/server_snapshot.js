@@ -21,7 +21,6 @@ var render = phantom({
     format      : 'pdf',
     quality     : 50,
     phantomFlags: ['--ignore-ssl-errors=true'],
-//    phantomFlags: ['--ignore-ssl-errors=true', '--proxy=127.0.0.1:7070', '--proxy-type=socks5'],
     timeout     : 300000,
     printMedia  : true,
     retries     : 2,

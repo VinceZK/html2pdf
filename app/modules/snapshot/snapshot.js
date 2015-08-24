@@ -6,7 +6,7 @@
 angular.module('snapshot', ['ui.bootstrap','dk-alert'])
     .controller('snapshotCtrl', ['$scope','$window','$timeout','$modal','snapshotSer','alertSer',
         function($scope,$window,$timeout,$modal,snapshotSer,alertSer){
-            var ossHost = 'http://oss.darkhouse.com.cn/snapshots/';
+            var ossHost = 'http://snapshots.darkhouse.com.cn/snapshots/';
 
             $scope.inputURL = null;
             $scope.jobList = [];
