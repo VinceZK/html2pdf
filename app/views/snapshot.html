@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html ng-app="snapshot" >
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>网页转PDF或图片</title>
+    <meta name="fragment" content="!">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="baidu-site-verification" content="I6821tx6uy" />
+    <meta name="google-site-verification" content="J2mWs7LD0IOv_AO9XbAfOjQB3_uDrIMYxxfCV8Zxj2Q" />
+    <meta name="google-site-verification" content="6J52BKBdfuOGsJ5igwZbqHIB5P-twt3y5HWaX32MIyA" />
+    <meta name="msvalidate.01" content="2D150EBF5D1258A170F1EC51BF887A00" />
+    <meta name="chinaz-site-verification" content="44C3A7EC-B394-C932-098F-B3DA8C7B3531" />
+    <meta name="description" content="提供最快的网页转PDF和图片解决方案">
+    <meta name="author" content="DarkHouse">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="网页转PDF神器,网页保存为pdf,在线网页转图片, 在线网页转pdf,网页转图片,网页转PNG,网页转JPG,网页快照">
+    <base href="/"/>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Custom styles for this page -->
+    <link rel="stylesheet" href="../modules/snapshot/snapshot.css">
+    <!-- baidu statics -->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            console.log(window.innerWidth);
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?38a6c9a208aec6a106da9b86282f807b";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+
+<body>
+    <div class="page-header">
+        <h1>网页转PDF或图片</h1>
+    </div>
+    <div class="snapshot-powerby">
+        <p>Powered by <a href="/blog/about" target="_blank">Darkhouse</a></p>
+    </div>
+    <div class="snapshot-pick">
+        <a href="snapshots/list">所有快照</a>
+        <span>|</span>
+        <a href="download" target="_blank">提取</a>
+    </div>
+
+    <div class="container-fluid" ng-controller="snapshotCtrl">
+        <!-- SHOW ERROR/SUCCESS MESSAGES -->
+        <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1" ng-controller="alertCtrl">
+            <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
+                <div ng-bind="alert.msg" ></div>
+            </alert>
+        </div>
+
+        <div class="row">
+            <a class="snapshot-batch col-md-2 col-md-offset-2 col-xs-4 col-xs-offset-1"
+               ng-click="switchUrlInput()" ng-bind="switchDesc"></a>
+        </div>
+
+        <div id="urlInput" class="row">
+            <div ng-show="urlInput === 'single'" ng-cloak class="input-group col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
+                <input type="text" class="form-control" placeholder="http://www.website.com/"
+                        ng-model="inputURL" ng-keypress="enterToSubmit($event)" autofocus>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="submitSnapshotJob()">Go!</button>
+                </span>
+            </div>
+            <div ng-show="urlInput === 'multi'" ng-cloak class="input-group col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
+                <textarea class="form-control" placeholder="http://www.website.com/ “回车换行区分不同的站点”" rows="3" ng-model="inputURL">
+                </textarea>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="submitSnapshotJob()">Go!</button>
+                </span>
+            </div>
+        </div>
+
+        <div class="snapshot-format row">
+            <label class="radio-inline col-md-1 col-md-offset-4 col-xs-2 col-xs-offset-2">
+                <input type="radio" name="phantomOpts.format" value="pdf" ng-model="phantomOpts.format"> PDF
+            </label>
+            <label class="radio-inline col-md-1 col-xs-2">
+                <input type="radio" name="phantomOpts.format" value="png" ng-model="phantomOpts.format"> PNG
+            </label>
+            <label class="radio-inline col-md-1 col-xs-2">
+                <input type="radio" name="phantomOpts.format" value="jpeg" ng-model="phantomOpts.format"> JPEG
+            </label>
+            <label class="radio-inline col-md-1 col-xs-2">
+                <input type="radio" name="phantomOpts.format" value="gif" ng-model="phantomOpts.format"> GIF
+            </label>
+        </div>
+
+        <div class="snapshot-advanced-link row">
+             <a class="col-md-2 col-md-offset-5 col-xs-6 col-xs-offset-3 ng-cloak" style="text-align: center"
+                     ng-click="toggleAdvancedOptions()" ng-bind="optionDesc"></a>
+        </div>
+
+        <div id="advancedOption" ng-show="advancedOption === 'show'" ng-cloak class="form-horizontal snapshot-advanced-option">
+            <div class="form-group">
+                <label for="orientation" class="col-sm-3 col-sm-offset-2 col-xs-3 col-xs-offset-2 control-label">页面布局</label>
+                <div class="col-sm-3 col-xs-4">
+                    <select id="orientation" class="form-control" ng-model="phantomOpts.orientation">
+                        <option value="Portrait">横向</option>
+                        <option value="Landscape">纵向</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="paperSize" class="col-sm-3 col-sm-offset-2 col-xs-3 col-xs-offset-2 control-label">纸张大小</label>
+                <div class="col-sm-3 col-xs-4">
+                    <select id="paperSize" class="form-control" ng-model="phantomOpts.paperFormat">
+                        <option value="A4">A4</option>
+                        <option value="A3">A3</option>
+                        <option value="Letter">Letter</option>
+                        <option value="Legal">Legal</option>
+                        <option value="Tablojd">Tablojd</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="margins" class="col-sm-3 col-sm-offset-2 col-xs-3 col-xs-offset-2 control-label">页面边距</label>
+                <div class="col-sm-3 col-xs-4">
+                    <select id="margins" class="form-control" ng-model="margin">
+                        <option value="Default">默认</option>
+                        <option value="None">无边距</option>
+                        <option value="Minimum">最小边距</option>
+                        <option value="Custom">自定义</option>
+                    </select>
+                </div>
+
+                <div class="snapshot-custom-margin col-xs-2" ng-show="margin === 'Custom'">
+                    <input type="number" ng-model="customMargin">
+                    <span>CM</span>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="checkbox col-sm-3 col-sm-offset-5 col-xs-6 col-xs-offset-5">
+                    <label>
+                        <input type="checkbox" ng-model="phantomOpts.headerAndFooter">
+                        打印页眉和页脚
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div id="jobsTable" ng-show="jobList.length > 0" ng-cloak  class="row snapshot-job-list">
+        <!--<div id="jobsTable" class="row snapshot-job-list">-->
+            <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
+                <p><strong>你可以选择以下三种方式提取:</strong></p>
+                <ol>
+                    <li>保持此页面不关闭，等待作业状态完成后，点击提取码便可下载；</li>
+                    <li>记住提取码，之后再进入本站，点击右上角“提取”按钮后下载；</li>
+                    <li>登记你的email地址，作业完成后将自动发送下载链接到你的邮箱。>>> <a ng-click="registerEmail('MM')">登记</a></p></li>
+                </ol>
+            </div>
+            <div class="col-md-8 col-md-offset-2 col-xs-12">
+                <table id="jobListTable" class="table table-striped snapshot-table">
+                    <colgroup>
+                        <col style="width:288px">
+                        <col style="width:80%">
+                        <col style="width:20%">
+                    </colgroup>
+                    <tr><th>提取码</th><th>作业描述</th><th>状态</th></tr>
+                    <tr ng-repeat="job in jobList">
+                        <td>{{job.JOB_GUID}}</td>
+                        <td style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{job.JOB_DESC}}</td>
+                        <td>{{job.STATUS_TEXT}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="ServiceDesc" class="row snapshot-services">
+            <div class="col-xs-12 col-sm-4  text-center snapshot-services-block">
+                <h3>接口服务</h3>
+                <p>让你的应用程序能方便将URL或者HTML文件转化成高质量的PDF和图片。你可以在各种编程环境下调用该API，它还提供许多选项，
+                    帮助你调整页面布局、页眉和页脚、去除广告等。
+                </p>
+            </div>
+            <div class="col-xs-12 col-sm-4 text-center snapshot-services-block">
+                <h3>批量转换</h3>
+                <p>如果你有许多页面需要转成PDF或者图片，我们提供批量转换的接口和服务。由于批量转换可能需要运行一段时间，
+                    因此后台需要一个完善的作业调度系统，它能将这些页面压缩打包成ZIP，以方便存储和下载。
+                </p>
+            </div>
+            <div class="col-xs-12 col-sm-4 text-center snapshot-services-block">
+                <h3>咨询服务</h3>
+                <p>如果你想在自己的环境中部署HTML转PDF或图片的服务，请直接联系我们，我们可以提供咨询和实施的服务。
+                    你可以将你的需求email至：<a href="mailto:html2pdf@foxmail.com">html2pdf@darkhouse.com.cn</a>。
+                </p>
+            </div>
+        </div>
+
+        <div class="panel panel-default snapshot-lastest-print" style="<%= TOTAL_NUM_ITEMS===0?'display:none':'display:block'%>">
+            <!-- Default panel contents -->
+            <div class="panel-heading">网友最新打印<span>（总共已经打印了<%= TOTAL_NUM_ITEMS %>个网页）</span></div>
+
+            <!-- List group -->
+            <ul class="list-group">
+                <% for(var i=0; i<snapPages.length; i++) { %>
+                <li class="list-group-item">
+                    <a href="<%= '/snapshots/'+snapPages[i].JOB_GUID+'/'+snapPages[i].SEQ %>" target="_blank">
+                        <%= snapPages[i].TITLE?snapPages[i].TITLE.trim()==''?snapPages[i].URL:snapPages[i].TITLE:snapPages[i].URL %></a>
+                    <span>&nbsp;&nbsp;<%= snapPages[i].FINISH_TIME %></span>
+                </li>
+                <% } %>
+
+            </ul>
+
+            <a style="float:right" href="/snapshots/list/4">...浏览更多</a>
+        </div>
+
+    </div>
+
+
+
+    <div class="snapshot-foot">
+        <p><strong>网页不会一直存在，很有可能马上消失！赶快保存起来吧……</strong></p>
+        <a href="www.hanapost.com" target="_blank">HANAPOST</a>&nbsp;
+        <!-- 360 friendly link -->
+        <script type="text/javascript" src="http://links.webscan.360.cn/index/index/ab5ea5665ee72a70a69d30dbd98f661a"></script>
+    </div>
+    <script type="text/ng-template" id="addEmail.html">
+        <div class="modal-header">
+            <h3 class="modal-title">邮箱登记</h3>
+        </div>
+        <form>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="InputEmail">邮箱地址</label>
+                <input type="email" class="form-control" id="InputEmail"  ng-model="subemail" placeholder="Email" focus-me="focusSubEmail">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" ng-click="ok()">登记</button>
+            <button class="btn btn-warning" ng-click="cancel()">取消</button>
+        </div>
+        </form>
+    </script>
+
+<!--<script src="../bower_components/jquery/dist/jquery.min.js"></script>-->
+<!--<script src="../bower_components/angular/angular.min.js"></script>-->
+<!--<script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>-->
+<!--<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>-->
+<!--<script src="../modules/snapshot/snapshot.js"></script>-->
+<!--<script src="../modules/common/alert.js"></script>-->
+<script src="../build/snapshot.min.js"></script>
+
+</body>
+</html>

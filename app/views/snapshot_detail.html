@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title><%=URLS[0].TITLE+' - 在线网页转pdf | 在线网页转图片 | html转pdf | 网页转pdf'%></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="baidu-site-verification" content="I6821tx6uy" />
+    <meta name="google-site-verification" content="J2mWs7LD0IOv_AO9XbAfOjQB3_uDrIMYxxfCV8Zxj2Q" />
+    <meta name="description" content="提供最快的网页转PDF和图片解决方案">
+    <meta name="author" content="DarkHouse">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="网页转PDF,网页保存为pdf,在线网页转图片, 在线网页转pdf,网页转图片,网页转PNG,,网页转JPG,网页快照">
+    <base href="/"/>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Custom styles for this page -->
+    <link rel="stylesheet" href="../modules/snapshot/snapshot.css">
+    <!-- baidu statics -->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?38a6c9a208aec6a106da9b86282f807b";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+</head>
+
+<body>
+<div class="page-header">
+    <h1>网页快照</h1>
+</div>
+<div class="container-fluid">
+    <div class="col-md-4 col-xs-12">
+        <img width="100%" height="100%" class="img-thumbnail"
+             src="<%='http://oss.darkhouse.com.cn/thumbnails/' + JOB_GUID
+            + '/' + URLS[0].SEQ + '.png'%>" >
+    </div>
+    <div class="col-md-8 col-xs-12">
+        <h4><strong>快照页面：</strong><span class="snapshot-smallnote"><%=URLS[0].URL%></span></h4>
+        <a href="<%=URLS[0].URL%>" target="_blank"><%=URLS[0].TITLE%></a>
+        <h4><strong>页面描述：</strong></h4>
+        <p><%=URLS[0].DESCRIPTION%></p>
+        <h4><strong>关键字：</strong></h4>
+        <p><%=URLS[0].KEYWORDS%></p>
+        <h4><strong>快照信息：</strong></h4>
+        <ul class="list-inline">
+            <li><%=FINISH_TIME%></li>
+            <li>|</li>
+            <li><%=OPTIONS.format%></li>
+            <li>|</li>
+            <li><%=OPTIONS.paperFormat%></li>
+            <li>|</li>
+            <% if(OPTIONS.orientation === 'Portrait') {%>
+            <li>竖向</li>
+            <% }else {%>
+            <li>横向</li>
+            <% }%>
+            <li>|</li>
+            <li><%= SIZE %></li>
+        </ul>
+        <a href="<%='http://oss.darkhouse.com.cn/snapshots/' + JOB_GUID + '.zip'%>" target="_blank" class="btn btn-primary btn-lg" role="button">
+            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>下载快照</a>
+    </div>
+</div>
+<div class="snapshot-foot">
+    <p><strong>网页不会一直存在，有的可能马上就会消失！</strong></p>
+    <p><a href="http://html2pdf.cn">html2pdf.cn</a>提供最方便的快照归档服务，能将网页转成PDF或图片，让那些重要的网页永久保存下来。</p>
+    <p>现在就出发，去保护你看好的网页吧<span><a class="btn btn-default" href="http://html2pdf.cn" role="button">GO!</a></span>
+    ，或者看看网友们保存下来的<a href="http://html2pdf.cn/snapshots/list" >快照</a>。</p>
+</div>
+
+<!--<script src="../bower_components/jquery/dist/jquery.min.js"></script>-->
+
+</body>
+</html>

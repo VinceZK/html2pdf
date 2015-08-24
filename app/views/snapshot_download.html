@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app="snapshot" >
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>网页转PDF或图片</title>
+    <meta name="fragment" content="!">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="baidu-site-verification" content="I6821tx6uy" />
+    <meta name="google-site-verification" content="J2mWs7LD0IOv_AO9XbAfOjQB3_uDrIMYxxfCV8Zxj2Q" />
+    <meta name="description" content="提供最快的网页转PDF和图片解决方案">
+    <meta name="author" content="DarkHouse">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="网页转PDF,网页保存为pdf,在线网页转图片, 在线网页转pdf,网页转图片,网页转PNG,,网页转JPG,网页快照">
+    <base href="/"/>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Custom styles for this page -->
+    <link rel="stylesheet" href="../modules/snapshot/snapshot.css">
+    <script>
+        function downloadSnapshot(){
+            var ossHost = 'http://oss.darkhouse.com.cn/snapshots/';
+            var guidExpression = /[0-9A-F]{32}/;
+            var guidExp=new RegExp(guidExpression);
+            var guid = $('#guid').val();
+            if(!guidExp.test(guid)){
+                $('#errormsg').text('输入的提取码不合法！');
+            }else{
+                var downloadUrl = ossHost + guid + '.zip';
+                window.open(downloadUrl,'_blank');
+            }
+        }
+    </script>
+    <!-- baidu statics -->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?38a6c9a208aec6a106da9b86282f807b";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+</head>
+
+<body>
+    <div class="page-header">
+        <h1>输入提起码下载</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <p id="errormsg" class="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1" style="color:red"></p>
+        </div>
+
+        <div id="urlInput" class="row">
+            <div class="input-group col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1">
+                <input id="guid" type="text" class="form-control" placeholder="提取码">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" onclick="downloadSnapshot()">提取</button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+</body>
+</html>

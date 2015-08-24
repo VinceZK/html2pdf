@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>在线网页转pdf | 在线网页转图片 | html转pdf | 网页转pdf</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="baidu-site-verification" content="I6821tx6uy" />
+    <meta name="google-site-verification" content="J2mWs7LD0IOv_AO9XbAfOjQB3_uDrIMYxxfCV8Zxj2Q" />
+    <meta name="description" content="提供最快的网页转PDF和图片解决方案">
+    <meta name="author" content="DarkHouse">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="网页转PDF,网页保存为pdf,在线网页转图片, 在线网页转pdf,网页转图片,网页转PNG,,网页转JPG,网页快照">
+    <base href="/"/>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Custom styles for this page -->
+    <link rel="stylesheet" href="../modules/snapshot/snapshot.css">
+    <!-- baidu statics -->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?38a6c9a208aec6a106da9b86282f807b";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+</head>
+
+<body>
+<div class="page-header">
+    <h1>网页转PDF或图片</h1>
+</div>
+<div class="container-fluid">
+   <ul class="list-group col-md-8 col-md-offset-2 col-xs-12">
+       <% for(var i=0; i<snapPages.length; i++) { %>
+       <li class="list-group-item snapshot-list">
+           <h4><a href="<%= '/snapshots/'+snapPages[i].JOB_GUID+'/'+snapPages[i].SEQ %>" target="_blank">
+               <%= snapPages[i].TITLE?snapPages[i].TITLE.trim()==''?snapPages[i].URL:snapPages[i].TITLE:snapPages[i].URL %></a></h4>
+           <p><%= snapPages[i].URL %></p>
+           <p><%= snapPages[i].FINISH_TIME %></p>
+       </li>
+       <% } %>
+   </ul>
+</div>
+<nav>
+    <ul class="pagination snapshot-pagination">
+        <li class="<%= CURRENT_PAGE_NO > 1?'':'disabled'%>">
+            <a href="<%= '/snapshots/list/'+ (CURRENT_PAGE_NO-1) %>" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <% for(var i=0; i<SHOWED_PAGES; i++) {
+           var pageNo = BEGIN_PAGE_NO+i; %>
+        <li class="<%= pageNo===CURRENT_PAGE_NO?'active':'' %>">
+            <a href="<%= '/snapshots/list/'+ pageNo %>"><%= pageNo %></a>
+        </li>
+        <% } %>
+        <li class="<%= CURRENT_PAGE_NO===NUM_PAGES?'disabled':''%>"  >
+            <a href="<%= '/snapshots/list/'+ (CURRENT_PAGE_NO+1) %>" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<div class="snapshot-foot">
+    <p><strong>网页不会一直存在，有的可能马上就会消失！</strong></p>
+    <p><a href="http://html2pdf.cn">html2pdf.cn</a>提供最方便的快照归档服务，能将网页转成PDF或图片，让那些重要的网页永久保存下来。</p>
+    <p>现在就出发，去保护你看好的网页吧<span><a class="btn btn-default" href="http://html2pdf.cn" role="button">GO!</a></span></p>
+</div>
+</body>
+</html>
