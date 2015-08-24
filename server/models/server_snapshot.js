@@ -31,9 +31,9 @@ var render = phantom({
 /**
  * Aliyun OSS connection settings
  */
-var ALY_endpoint = 'snapshot.oss-cn-hongkong-internal.aliyuncs.com';
+var ALY_endpoint = 'http://oss-cn-hongkong-internal.aliyuncs.com';
 if(process.env.IS_RUNNING_ON_LOCAL){
-    ALY_endpoint = ' snapshot.oss-cn-hongkong.aliyuncs.com';
+    ALY_endpoint = 'http://oss-cn-hongkong.aliyuncs.com';
 }
 var oss = new ALY.OSS({
     "accessKeyId": "ARdIDOkQTC2RQ66h",
@@ -112,7 +112,7 @@ module.exports = {
        }).pipe(concat(function(data) {
            var fileSize = data.length;
            oss.putObject({
-                   Bucket: 'zklee',
+                   Bucket: 'snapshot',
                    Key: 'snapshots/' + zipName,
                    Body: data,
                    AccessControlAllowOrigin: '',
@@ -145,7 +145,7 @@ module.exports = {
            callback(null, snapshotMsg.reportMsg('PHANTOM_RENDER_ERROR','E',err));
        }).pipe(concat(function(data){
            oss.putObject({
-                   Bucket: 'zklee',
+                   Bucket: 'snapshot',
                    Key: 'thumbnails/' + thumbnailName,
                    Body: data,
                    AccessControlAllowOrigin: '',
