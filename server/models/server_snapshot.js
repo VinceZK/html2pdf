@@ -31,10 +31,10 @@ var render = phantom({
 /**
  * Aliyun OSS connection settings
  */
-var ALY_endpoint = 'http://oss-cn-hangzhou-internal.aliyuncs.com';
-//if(process.env.IS_RUNNING_ON_LOCAL){
-//    ALY_endpoint = 'http://oss-cn-hangzhou.aliyuncs.com';
-//}
+var ALY_endpoint = 'snapshot.oss-cn-hongkong-internal.aliyuncs.com';
+if(process.env.IS_RUNNING_ON_LOCAL){
+    ALY_endpoint = ' snapshot.oss-cn-hongkong.aliyuncs.com';
+}
 var oss = new ALY.OSS({
     "accessKeyId": "ARdIDOkQTC2RQ66h",
     "secretAccessKey": "T9udcTwM3aIl8ivYi3Xsd8mW3ymSmT",

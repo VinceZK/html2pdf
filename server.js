@@ -37,6 +37,7 @@ app.use(cookieParser());
 
 async.series([
     function(callback){ //Initialize Snapshot Batch Job System
+        entityDB = require('./server/models/connections/conn_mysql_mdb.js');
         snapshotBatch = require('./server/models/server_snapshot_batch.js');
         snapshotBatch.kickStartBatchJob();
         snapshotBatch.kickEmailSendingJob();
