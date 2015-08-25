@@ -452,8 +452,8 @@ module.exports = {
                 startTime = new Date(nextDay.getFullYear(),nextDay.getMonth(),nextDay.getDate(),2,0,0,0);
             }
             var timeout = currTime.DateDiff('s',startTime) * 1000;
-//            console.log('startTime='+startTime);
-//            console.log('timeout='+timeout);
+            console.log('startTime='+startTime);
+            console.log('timeout='+timeout);
             run();
 //            _this.generateSiteMap(true,function(err){});
             setTimeout(run,timeout);
