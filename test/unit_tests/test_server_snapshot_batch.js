@@ -3,7 +3,7 @@
  */
 var snapshotBatch = require('../../server/models/server_snapshot_batch.js');
 
-describe.only('snapshot batch job processing system test', function() {
+describe('snapshot batch job processing system test', function() {
     var currJobGuid;
     describe('Test batch job submit, get, search, and update', function () {
         it('should submit a batch job', function (done) {
@@ -74,6 +74,14 @@ describe.only('snapshot batch job processing system test', function() {
             })
         });
 
+        it('should return a empty object', function(done){
+            snapshotBatch.getPageInfo('adfasdf',null,function(err,snapShot){
+                (err === null).should.be.ok;
+                (snapShot === null).should.be.ok;
+                done();
+            })
+        });
+
         it('should update the new submitted job status', function(done){
             snapshotBatch.updateBatchJobStatus(currJobGuid,2,'Success',
                 function(msg){
@@ -135,7 +143,7 @@ describe.only('snapshot batch job processing system test', function() {
 
     });
 
-    describe.skip('Test batch job schedular', function () {
+    describe('Test batch job schedular', function () {
         it('should trigger the batch job schedular, and run the snapshots', function (done) {
             snapshotBatch.kickStartBatchJob(function(){
                 done();

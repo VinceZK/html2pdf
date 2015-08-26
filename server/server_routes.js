@@ -58,9 +58,10 @@ router.use('/snapshots/*', function(req, res){
    }else{
        Snapshot.getPageInfo(snapGuid,seq,function(err,snapShot){
            if(err){
-               res.send('系统错误：'+ err).end();
+               res.send(err.msgText).end();
                return;
            }
+
            res.render('snapshot_detail',snapShot);
        });
    }

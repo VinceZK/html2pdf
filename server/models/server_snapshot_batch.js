@@ -117,8 +117,10 @@ module.exports = {
                 debug("Error occurs in getUnevaluatedURLs() when doing search.\n" +
                     "Error info: %s \n" +
                     "SQL statements: %s \n", err, selectSQL);
-                callback(err,null);
+                callback(snapshotMsg.reportMsg('SQL_ERROR','E',err),null);
             }else{
+                if(pages.length === 0)
+                    return callback(snapshotMsg.reportMsg('SNAPSHOT_NON_EXIST','E'), null);
                 var snapShot = {};
                 snapShot.JOB_GUID = pages[0].JOB_GUID;
                 snapShot.OPTIONS = eval("(" + pages[0].OPTIONS + ")");
@@ -452,8 +454,8 @@ module.exports = {
                 startTime = new Date(nextDay.getFullYear(),nextDay.getMonth(),nextDay.getDate(),2,0,0,0);
             }
             var timeout = currTime.DateDiff('s',startTime) * 1000;
-//            console.log('startTime='+startTime);
-//            console.log('timeout='+timeout);
+            console.log('startTime='+startTime);
+            console.log('timeout='+timeout);
             run();
 //            _this.generateSiteMap(true,function(err){});
             setTimeout(run,timeout);
