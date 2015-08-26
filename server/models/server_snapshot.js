@@ -221,7 +221,7 @@ module.exports = {
      * @param jobDesc
      */
    sendDownloadLink:function(recp,snapGuid,jobDesc,callback){
-       var downloadLink = 'http://oss.darkhouse.com.cn/snapshots/' + snapGuid + '.zip';
+       var downloadLink = 'http://snapshots.darkhouse.com.cn/snapshots/' + snapGuid + '.zip';
        var message = {
 
            // sender info
