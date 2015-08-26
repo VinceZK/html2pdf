@@ -200,11 +200,6 @@ angular.module('snapshot', ['ui.bootstrap','dk-alert'])
 
             switch2SingleUrlInput();
             hideAdvancedOptions();
-
-            //Get latest 60 pages
-            snapshotSer.getLatestPageList(60,function(retData){
-                $scope.latestPages = retData;
-            })
         }])
     .controller('addEmailCtrl',['$scope','$modalInstance',function($scope,$modalInstance){
         $scope.subemail = null;
@@ -224,7 +219,6 @@ angular.module('snapshot', ['ui.bootstrap','dk-alert'])
             getJobList:getJobList,
             getStatusText:getStatusText,
             addSubscribeEmail:addSubscribeEmail,
-            getLatestPageList:getLatestPageList,
             textarea2Array:textarea2Array,
             checkURLisValid:checkURLisValid
         };
@@ -243,16 +237,6 @@ angular.module('snapshot', ['ui.bootstrap','dk-alert'])
             $http.get('/pub/api/snapshot',{params:{jobGuids:jobGuids}})
                 .success(function(data){
                     callback(data.jobList);
-                })
-                .error(function(){
-                    callback(null);
-                })
-        }
-
-        function getLatestPageList(numItems, callback){
-            $http.get('/pub/api/snapshot/latest',{params:{num:numItems}})
-                .success(function(data){
-                    callback(data);
                 })
                 .error(function(){
                     callback(null);
