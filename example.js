@@ -5,7 +5,7 @@ var phantom = require('phantom-render-stream');
 var fs = require('fs');
 
 var render = phantom({
-    format      : 'gif',
+    format      : 'png',
     quality     : 50,
     retries     : 2,
     phantomFlags: ['--ignore-ssl-errors=true','--output-encoding=gb2312'],
@@ -22,4 +22,4 @@ render('http://tool.oschina.net/', {
     orientation : 'portrait',  // Defaults to portrait. 'landscape' is also valid
     margin      : '1cm'
 
-}).pipe(fs.createWriteStream('out.gif'));
+}).pipe(fs.createWriteStream('out.png'));
