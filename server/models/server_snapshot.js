@@ -273,9 +273,10 @@ module.exports = {
      * @param snapGuid
      * @param callback
      * @param jobDesc
+     * @param format
      */
-   sendDownloadLink:function(recp,snapGuid,jobDesc,callback){
-       var downloadLink = 'http://snapshots.darkhouse.com.cn/snapshots/' + snapGuid + '.zip';
+   sendDownloadLink:function(recp,snapGuid,jobDesc,format,callback){
+       var downloadLink = 'http://snapshots.darkhouse.com.cn/snapshots/' + snapGuid + format;
        var message = {
 
            // sender info

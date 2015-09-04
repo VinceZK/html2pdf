@@ -70,9 +70,16 @@ angular.module('snapshot', ['ui.bootstrap','dk-alert'])
                             $scope.jobList[currIndex].STATUS_TEXT = snapshotSer.getStatusText(job.STATUS);
                             if(job.STATUS < 3){
                                 allFinished = false;
-                            }else if(job.STATUS === 3){//Finished Successfully
+                            }else if(job.STATUS === 3){//Finished
+                                var downloadLink = '';
+                                if($scope.urlInput === 'single'){
+                                    downloadLink = ossHost + job.JOB_GUID + '.' + eval("(" + job.OPTIONS + ")").format;
+                                }else{
+                                    downloadLink = ossHost + job.JOB_GUID + '.zip';
+                                }
+
                                 angular.element(jobListTableRowEle[currIndex+1].children[0]).replaceWith(
-                                    '<td><a href="'+ ossHost + job.JOB_GUID + '.zip' +
+                                    '<td><a href="'+ downloadLink +
                                         '" target="_blank">' + job.JOB_GUID + '</a></td>'
                                 );
                                 angular.element(jobListTableRowEle[currIndex+1].children[2]).addClass("snapshot-table-success");

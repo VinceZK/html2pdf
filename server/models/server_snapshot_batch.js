@@ -27,9 +27,9 @@ module.exports = {
 
         (typeof(opts) === 'object')?optsStr=JSON.stringify(opts):optsStr=opts;
         //Insert Batch job head info
-        var insertSQL = "INSERT INTO `MDB`.`BATCHJOB` (`JOB_GUID`, `STATUS`, `JOB_DESC`, `OPTIONS`, `CREATE_TIME`) " +
+        var insertSQL = "INSERT INTO `MDB`.`BATCHJOB` (`JOB_GUID`, `STATUS`, `NUM_PAGES`, `JOB_DESC`, `OPTIONS`, `CREATE_TIME`) " +
             "VALUES (" + entityDB.pool.escape(jobGuid) +
-            ", '1', " + entityDB.pool.escape(urls[0])+
+            ", '1', " + entityDB.pool.escape(urls.length)+ ", " + entityDB.pool.escape(urls[0])+
             ", " + entityDB.pool.escape(optsStr) +
             ", " + entityDB.pool.escape(timeUtil.getCurrentDateTime()) + ")";
         insertSQLs.push(insertSQL);
@@ -387,10 +387,13 @@ module.exports = {
      * Send a successful email include a download link
      * @param recpt
      * @param snapGuid
+     * @param jobDesc
+     * @param format
+     * @param callback
      */
-    sendSuccessfulEmail:function(recpt,snapGuid,jobDesc,callback){
+    sendSuccessfulEmail:function(recpt,snapGuid,jobDesc,format,callback){
         if(recpt === null || recpt === undefined || recpt === '')return;
-        snapshot.sendDownloadLink(recpt, snapGuid, jobDesc,   function(error,info){
+        snapshot.sendDownloadLink(recpt, snapGuid, jobDesc,format,function(error,info){
             var updateSQL;
             if(error){
                 updateSQL = "UPDATE BATCHJOB SET EMAIL_STATUS=2 " +
@@ -520,8 +523,10 @@ module.exports = {
             //Running the job one by one
             async.eachSeries(Jobs, function(job, callback){
                 if(job['STATUS'] === 3){
-                    _this.sendSuccessfulEmail(job['SUB_EMAIL'],job['JOB_GUID'],job['JOB_DESC'],function(err){
-                        callback(err);
+                    var format = job.NUM_PAGES <= 1?'.'+eval("(" + job.OPTIONS + ")").format:'.zip';
+                    _this.sendSuccessfulEmail(job['SUB_EMAIL'],job['JOB_GUID'],job['JOB_DESC'],format,
+                        function(err){
+                            callback(err);
                     })
                 }else if(job['STATUS'] === 4){
                     _this.sendFailedEmail(job['SUB_EMAIL'],job['JOB_GUID'],job['JOB_DESC'], job['PROCESS_MSG'],
