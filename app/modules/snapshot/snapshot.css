@@ -57,6 +57,8 @@ h1{
 }
 .snapshot-services-block p{
     color: #999;
+    width: 320px;
+    margin: auto;
 }
 .snapshot-services-block h3{
     color: #888;
