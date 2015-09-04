@@ -71,12 +71,8 @@ angular.module('snapshot', ['ui.bootstrap','dk-alert'])
                             if(job.STATUS < 3){
                                 allFinished = false;
                             }else if(job.STATUS === 3){//Finished
-                                var downloadLink = '';
-                                if($scope.urlInput === 'single'){
-                                    downloadLink = ossHost + job.JOB_GUID + '.' + eval("(" + job.OPTIONS + ")").format;
-                                }else{
-                                    downloadLink = ossHost + job.JOB_GUID + '.zip';
-                                }
+                                var downloadLink =
+                                    job.NUM_PAGES === 1?ossHost + job.JOB_GUID + '.' + eval("(" + job.OPTIONS + ")").format:ossHost + job.JOB_GUID + '.zip';
 
                                 angular.element(jobListTableRowEle[currIndex+1].children[0]).replaceWith(
                                     '<td><a href="'+ downloadLink +
