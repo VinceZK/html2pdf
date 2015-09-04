@@ -28,10 +28,21 @@ router.use('/baidu-verify-50F30B1382.txt', function(req, res){
 router.use('/webscan_360_cn.html', function(req, res){
     res.sendFile(__dirname + '/seo/webscan_360_cn.html');
 });
-router.use('/download', function(req, res){
-    res.render('snapshot_download');
+router.use('/download*', function(req, res){
+    var fragments = req.baseUrl.split('/',3);
+    if (fragments.length === 2){
+        res.render('snapshot_download');
+        return;
+    }
+    var snapGuid = fragments[2] || null;
+    Snapshot.getPageInfo(snapGuid,null,function(err,snapShot){
+        if(err){
+            res.send(err.msgText).end();
+            return;
+        }
+        res.render('snapshot_download_e',snapShot);
+    });
 });
-
 //Render the /snapshots/<guid>/<index> pages
 router.use('/snapshots/*', function(req, res){
    var fragments = req.baseUrl.split('/',4);

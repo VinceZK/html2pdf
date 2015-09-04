@@ -49,8 +49,6 @@ module.exports = {
                 callback(err, null);
                 return;
             }
-            var finishTime = new Date(snapShot.FINISH_TIME);
-            snapShot.FINISH_TIME = finishTime.Format('YYYY/MM/DD hh:mm:ss');
             callback(null, snapShot);
         })
     },

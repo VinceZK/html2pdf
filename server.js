@@ -26,7 +26,7 @@ app.use(favicon(__dirname + '/favicon.ico'));
 
 //app.get('env') return the environment variable NODE_ENV, same as process.env.NODE_ENV
 if (app.get('env') === 'development') {
-    app.use(logger('common'));
+    app.use(logger('dev'));
 }else{
     app.use(logger());
 }

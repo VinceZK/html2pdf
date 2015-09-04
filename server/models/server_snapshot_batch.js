@@ -130,6 +130,12 @@ module.exports = {
                 snapShot.SIZE= fileSize<1048576?Math.ceil(fileSize/1024)+'KB':Math.ceil(fileSize/1048576)+'MB';
                 else
                 snapShot.SIZE='0KB';
+                snapShot.EXTENSION = (pages.length === 1)?('.' + snapShot.OPTIONS.format):'.zip';
+                var finishTime = new Date(snapShot.FINISH_TIME);
+                snapShot.FINISH_TIME = finishTime.Format('YYYY/MM/DD hh:mm:ss');
+                if(snapShot.FINISH_TIME < '2015/09/04'){
+                    snapShot.EXTENSION='.zip';
+                }
                 snapShot.URLS = [];
                 _.each(pages, function(page){
                     var pageObj = {};
@@ -564,22 +570,36 @@ module.exports = {
                 entityDB.executeSQL(selectSQL2, function(err, urls){
                     if(err)return callback(err);
                     var snapUrls = _.map(urls,  function(url){return url.URL});
-                    snapshot.createSnapshotsFromURLs(jobGuid,snapUrls,job.OPTIONS,
-                        function(zipStream, snapGuid){
-                            snapshot.saveSnapStream2ALYOSS(zipStream, snapGuid,
-                                function(retData, err){
-                                    if(err){
-                                        _this.updateBatchJobStatus(jobGuid,4,err,function(){
-                                            callback(err);
-                                        });
-                                    }else{
-                                        _this.updateBatchJobStatus(jobGuid,3,retData,function(){
-                                            callback(null);
-                                        });
-                                    }
-                                })
-                        });
-
+                    if(snapUrls.length === 1){
+                        snapshot.createSnapshotsFromURL(jobGuid,snapUrls[0],job.OPTIONS,
+                        function(retData, err){
+                            if(err){
+                                _this.updateBatchJobStatus(jobGuid,4,err,function(){
+                                    callback(err);
+                                });
+                            }else{
+                                _this.updateBatchJobStatus(jobGuid,3,retData,function(){
+                                    callback(null);
+                                });
+                            }
+                        })
+                    }else{
+                        snapshot.createSnapshotsFromURLs(jobGuid,snapUrls,job.OPTIONS,
+                            function(zipStream, snapGuid){
+                                snapshot.saveSnapStream2ALYOSS(zipStream, snapGuid,
+                                    function(retData, err){
+                                        if(err){
+                                            _this.updateBatchJobStatus(jobGuid,4,err,function(){
+                                                callback(err);
+                                            });
+                                        }else{
+                                            _this.updateBatchJobStatus(jobGuid,3,retData,function(){
+                                                callback(null);
+                                            });
+                                        }
+                                    })
+                            });
+                    }
                 })
             }, function done(err){
                 if(err){

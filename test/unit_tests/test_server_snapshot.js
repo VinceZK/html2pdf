@@ -40,6 +40,53 @@ describe('page snapshot tests', function() {
         });
     });
 
+    describe('#createSnapshotsFromURL()',function(){
+        it('should upload a pdf to aly oss',function(done){
+            snapshot.createSnapshotsFromURL(guid.genTimeBased(),'http://tool.oschina.net/commons',
+                {format:'pdf', width:1920, height:1080},
+            function(retData,err){
+                (err === null).should.ok;
+                retData.should.ok;
+                retData.size.should.be.greaterThan(0);
+                done();
+            })
+        });
+
+        it('should upload a png to aly oss',function(done){
+            snapshot.createSnapshotsFromURL(guid.genTimeBased(),'http://tool.oschina.net/commons',
+                {format:'png', width:1920, height:1080},
+                function(retData,err){
+                    (err === null).should.be.ok;
+                    retData.should.ok;
+                    retData.size.should.be.greaterThan(0);
+                    done();
+                })
+        });
+
+        it('should upload a jpeg to aly oss',function(done){
+            snapshot.createSnapshotsFromURL(guid.genTimeBased(),'http://tool.oschina.net/commons',
+                {format:'jpeg', width:1920, height:1080},
+                function(retData,err){
+                    (err === null).should.ok;
+                    retData.should.ok;
+                    retData.size.should.be.greaterThan(0);
+                    done();
+                })
+        });
+
+        it.only('should upload a gif to aly oss',function(done){
+            snapshot.createSnapshotsFromURL(guid.genTimeBased(),'http://tool.oschina.net/commons',
+                {format:'gif', width:1920, height:1080},
+                function(retData,err){
+                    (err === null).should.ok;
+                    retData.should.ok;
+//                    console.log(retData);
+                    retData.size.should.be.greaterThan(0);
+                    done();
+                })
+        });
+    });
+
     describe('#createThumbnailFromURLs()',function(){
         it('should create a thumbnail and return information of the page', function (done) {
             snapshot.createThumbnailFromURLs('http://segmentfault.com/q/1010000000484993',{width:1230, height:1080},

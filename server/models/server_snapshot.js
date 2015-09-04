@@ -81,6 +81,60 @@ module.exports = {
    },
 
     /**
+     * create a page snapshot and convert it to a stream
+     * @param snapGuid
+     * @param url
+     * @param opts
+     * @param callback
+     */
+    createSnapshotsFromURL:function(snapGuid, url, opts, callback){
+        var phantomOpts;
+        (typeof(opts) === 'object')?phantomOpts=opts:phantomOpts=eval("(" + opts + ")");
+        var snapshotName = snapGuid + '.' + (phantomOpts?phantomOpts.format || 'pdf':'pdf');
+        var formatType = phantomOpts?phantomOpts.format || 'pdf':'pdf';
+        render(url, phantomOpts).on('error',function(err){
+            debug("Phantom Render ==> %s", err);
+            callback(null, snapshotMsg.reportMsg('PHANTOM_RENDER_ERROR','E',err));
+        }).pipe(concat(function(data){
+            var fileSize = data.length;
+            var contentType;
+            switch(formatType){
+                case 'pdf':
+                    contentType = 'application/'+'pdf';
+                    break;
+                case 'jpeg':
+                    contentType = 'image/'+'jpeg';
+                    break;
+                case 'png':
+                    contentType = 'image/'+'png';
+                    break;
+                case 'gif':
+                    contentType = 'image/'+'gif';
+                    break;
+                default:
+                    contentType = 'application/'+'pdf';
+            }
+
+            oss.putObject({
+                    Bucket: 'snapshot',
+                    Key: 'snapshots/' + snapshotName,
+                    Body: data,
+                    AccessControlAllowOrigin: '',
+                    ContentType: contentType
+                },
+                function (err, retData) {
+                    if (err) {
+                        debug("ALY OSS putObject err ==> %s", err);
+                        var errMsg = snapshotMsg.reportMsg('ALY_OSS_UPLOAD_ERROR','E',err);
+                        return callback(null,errMsg);
+                    }
+                    retData.size = fileSize;
+                    callback(retData, null);
+                })
+        }));
+    },
+
+    /**
      * create a thumbnail of the URL and return some meta information like title, keywords, and description
      * @param url
      * @param opts
