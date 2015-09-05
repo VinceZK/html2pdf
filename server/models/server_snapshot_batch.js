@@ -466,9 +466,9 @@ module.exports = {
 //            console.log('startTime='+startTime);
 //            console.log('timeout='+timeout);
             run();
-//            _this.generateSiteMap(true,function(err){});
-            setTimeout(run,timeout);
-            setTimeout(recurrentRun,timeout);
+            setInterval(run, 3600000);
+//            setTimeout(run,timeout);
+//            setTimeout(recurrentRun,timeout);
         }
 
         function run(){
