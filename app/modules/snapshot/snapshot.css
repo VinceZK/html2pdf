@@ -171,11 +171,11 @@ h1{
     margin-right: auto;
 }
 .snapshot-foot p{
-    color: #AFAFAF;
+    color: #999;
     font-size: 16px;
 }
 .snapshot-foot a{
-    color: #999;
+    color: #AFAFAF;
     font-size: 12px;
     /*padding: 0 8px;*/
     /*white-space: nowrap;*/
