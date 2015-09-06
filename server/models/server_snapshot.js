@@ -120,7 +120,8 @@ module.exports = {
                     Key: 'snapshots/' + snapshotName,
                     Body: data,
                     AccessControlAllowOrigin: '',
-                    ContentType: contentType
+                    ContentType: contentType,
+                    Expires: new Date().DateAdd('d',1)
                 },
                 function (err, retData) {
                     if (err) {
@@ -202,7 +203,8 @@ module.exports = {
                    Key: 'thumbnails/' + thumbnailName,
                    Body: data,
                    AccessControlAllowOrigin: '',
-                   ContentType: 'image/png'
+                   ContentType: 'image/png',
+                   Expires: new Date().DateAdd('d',1)
                },
                function (err, retData) {
                    if (err) {
