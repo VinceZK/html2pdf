@@ -176,8 +176,8 @@ h1{
 }
 .snapshot-foot a{
     color: #999;
-    padding: 0 8px;
-    white-space: nowrap;
+    /*padding: 0 8px;*/
+    /*white-space: nowrap;*/
 }
 [ng\:cloak], [ng-cloak], .ng-cloak {
     display: none !important;
