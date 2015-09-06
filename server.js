@@ -21,7 +21,7 @@ app.engine('.html',ejs.__express);
 app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
-app.use(express.static(path.join(__dirname, 'app')));
+app.use(express.static(path.join(__dirname, 'app'), { maxAge:'1h'}));
 app.use(favicon(__dirname + '/favicon.ico'));
 
 //app.get('env') return the environment variable NODE_ENV, same as process.env.NODE_ENV
