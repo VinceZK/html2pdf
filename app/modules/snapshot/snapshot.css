@@ -176,6 +176,7 @@ h1{
 }
 .snapshot-foot a{
     color: #999;
+    font-size: 12px;
     /*padding: 0 8px;*/
     /*white-space: nowrap;*/
 }
