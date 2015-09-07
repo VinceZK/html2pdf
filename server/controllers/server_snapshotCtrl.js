@@ -39,6 +39,11 @@ module.exports = {
                     retData.numberOfItems = jobs.length;
                     retData.jobList = jobs;
                 }
+                res.set({
+                    'Cache-Control':'no-cache, no-store, must-revalidate',
+                    'Pragma':'no-cache',
+                    'Expires':0
+                });
                 res.json(retData);
         })
     },
