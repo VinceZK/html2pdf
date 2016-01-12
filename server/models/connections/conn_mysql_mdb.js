@@ -12,13 +12,6 @@ var pool = mysql.createPool({
     database: 'MDB',
     port: 3306
 });
-//var pool = mysql.createPool({
-//    host: '121.40.149.111',
-//    user: 'root',
-//    password: 'root',
-//    database: 'MDB',
-//    port: 3306
-//});
 var tenant_domain = '';
 var entities = [];
 
