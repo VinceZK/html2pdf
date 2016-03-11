@@ -147,7 +147,7 @@ angular.module('snapshot', ['ui.bootstrap','dk-alert'])
                             $scope.phantomOpts.margin = '1cm';
                 }
 
-                if($scope.phantomOpts.format === 'pdf')$scope.phantomOpts.height = 100000;
+                if($scope.phantomOpts.format === 'pdf')$scope.phantomOpts.height = 10000;
 //                console.log($scope.phantomOpts);
 
                 snapshotSer.submitSnapshotJob(urls,$scope.phantomOpts,function(err, data){

@@ -336,9 +336,9 @@ module.exports = {
         var updateSQL;
         if(status===1){
             updateSQL = "UPDATE SNAPSHOT_URL SET STATUS=" + entityDB.pool.escape(status) +
-                ", TITLE=" + entityDB.pool.escape(pageInfo.title) +
-                ", KEYWORDS=" + entityDB.pool.escape(pageInfo.keywords) +
-                ", DESCRIPTION=" + entityDB.pool.escape(pageInfo.description) +
+                ", TITLE=" + entityDB.pool.escape(pageInfo.title.substr(0,300)) +
+                ", KEYWORDS=" + entityDB.pool.escape(pageInfo.keywords.substr(0,500)) +
+                ", DESCRIPTION=" + entityDB.pool.escape(pageInfo.description.substr(0,1000)) +
                 " WHERE JOB_GUID=" + entityDB.pool.escape(jobGuid) +
                 " AND SEQ=" +  entityDB.pool.escape(SEQ);
         }else{
