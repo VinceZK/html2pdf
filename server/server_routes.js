@@ -13,12 +13,12 @@ router.route('/pub/api/snapshot')
 router.get('/pub/api/snapshot/list',Snapshot.getUnfinishedBatchJobs);
 
 // angular启动页
-router.use('/sitemap2', function(req, res){
+/*router.use('/sitemap2', function(req, res){
     res.sendFile(__dirname + '/seo/sitemap_google_html2pdf.txt');
 });
 router.use('/sitemap.txt', function(req, res){
     res.sendFile(__dirname + '/seo/sitemap_google_html2pdf.txt');
-});
+});*/
 router.use('/robots.txt', function(req, res){
     res.sendFile(__dirname + '/seo/robots.txt');
 });
@@ -44,7 +44,7 @@ router.use('/download*', function(req, res){
     });
 });
 //Render the /snapshots/<guid>/<index> pages
-router.use('/snapshots/*', function(req, res){
+/*router.use('/snapshots/!*', function(req, res){
    var fragments = req.baseUrl.split('/',4);
    if (fragments.length < 3){
        res.status(404).end();
@@ -77,14 +77,18 @@ router.use('/snapshots/*', function(req, res){
        });
    }
 
-});
+});*/
 
 router.use('/', function(req, res){
-    Snapshot.getLatestPageList(30,function(err,latestPages){
+/*    Snapshot.getLatestPageList(30,function(err,latestPages){
         err?res.render('snapshot',{
             TOTAL_NUM_ITEMS:0,
             snapPages:[]
         }):res.render('snapshot',latestPages);
+    });*/
+    res.render('snapshot',{
+        TOTAL_NUM_ITEMS:0,
+        snapPages:[]
     });
 });
 

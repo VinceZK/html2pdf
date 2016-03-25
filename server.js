@@ -41,7 +41,7 @@ async.series([
         snapshotBatch = require('./server/models/server_snapshot_batch.js');
         snapshotBatch.kickStartBatchJob();
         snapshotBatch.kickEmailSendingJob();
-        snapshotBatch.schedulePageEvaluateJob(false);
+        //snapshotBatch.schedulePageEvaluateJob(false);
         callback(null, 0);
     },
     function(callback){ //Initialize Routes
