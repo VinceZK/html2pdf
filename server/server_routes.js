@@ -44,7 +44,7 @@ router.use('/download*', function(req, res){
     });
 });
 //Render the /snapshots/<guid>/<index> pages
-router.use('/snapshots/!*', function(req, res){
+router.use('/snapshots/*', function(req, res){
    var fragments = req.baseUrl.split('/',4);
    if (fragments.length < 3){
        res.status(404).end();
@@ -86,10 +86,10 @@ router.use('/', function(req, res){
             snapPages:[]
         }):res.render('snapshot',latestPages);
     });
-    res.render('snapshot',{
-        TOTAL_NUM_ITEMS:0,
-        snapPages:[]
-    });
+    //res.render('snapshot',{
+    //    TOTAL_NU  M_ITEMS:0,
+    //    snapPages:[]
+    //});
 });
 
 
