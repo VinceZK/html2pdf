@@ -44,52 +44,52 @@ router.use('/download*', function(req, res){
     });
 });
 //Render the /snapshots/<guid>/<index> pages
-router.use('/snapshots/*', function(req, res){
-   var fragments = req.baseUrl.split('/',4);
-   if (fragments.length < 3){
-       res.status(404).end();
-       return;
-   }
-   var snapGuid = fragments[2] || null;
-   var seq = fragments[3] || null;
-
-   if(snapGuid === 'list'){
-       if(seq === null || seq == 0){
-           seq = 1;
-       }else{
-           seq = parseInt(seq);
-       }
-       Snapshot.getPageList(seq,10,function(err,pages){
-           if(err){
-               res.send('系统错误：'+ err).end();
-               return;
-           }
-           res.render('snapshot_list',pages);
-       });
-   }else{
-       Snapshot.getPageInfo(snapGuid,seq,function(err,snapShot){
-           if(err){
-               res.send(err.msgText).end();
-               return;
-           }
-
-           res.render('snapshot_detail',snapShot);
-       });
-   }
-
-});
+//router.use('/snapshots/*', function(req, res){
+//   var fragments = req.baseUrl.split('/',4);
+//   if (fragments.length < 3){
+//       res.status(404).end();
+//       return;
+//   }
+//   var snapGuid = fragments[2] || null;
+//   var seq = fragments[3] || null;
+//
+//   if(snapGuid === 'list'){
+//       if(seq === null || seq == 0){
+//           seq = 1;
+//       }else{
+//           seq = parseInt(seq);
+//       }
+//       Snapshot.getPageList(seq,10,function(err,pages){
+//           if(err){
+//               res.send('系统错误：'+ err).end();
+//               return;
+//           }
+//           res.render('snapshot_list',pages);
+//       });
+//   }else{
+//       Snapshot.getPageInfo(snapGuid,seq,function(err,snapShot){
+//           if(err){
+//               res.send(err.msgText).end();
+//               return;
+//           }
+//
+//           res.render('snapshot_detail',snapShot);
+//       });
+//   }
+//
+//});
 
 router.use('/', function(req, res){
-    Snapshot.getLatestPageList(30,function(err,latestPages){
-        err?res.render('snapshot',{
-            TOTAL_NUM_ITEMS:0,
-            snapPages:[]
-        }):res.render('snapshot',latestPages);
-    });
-    //res.render('snapshot',{
-    //    TOTAL_NU  M_ITEMS:0,
-    //    snapPages:[]
+    //Snapshot.getLatestPageList(30,function(err,latestPages){
+    //    err?res.render('snapshot',{
+    //        TOTAL_NUM_ITEMS:0,
+    //        snapPages:[]
+    //    }):res.render('snapshot',latestPages);
     //});
+    res.render('snapshot',{
+        TOTAL_NUM_ITEMS:0,
+        snapPages:[]
+    });
 });
 
 

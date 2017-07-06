@@ -462,13 +462,13 @@ module.exports = {
                 var nextDay = currTime.DateAdd('d',1);
                 startTime = new Date(nextDay.getFullYear(),nextDay.getMonth(),nextDay.getDate(),2,0,0,0);
             }
-            var timeout = currTime.DateDiff('s',startTime) * 1000;
-//            console.log('startTime='+startTime);
-//            console.log('timeout='+timeout);
+            //var timeout = currTime.DateDiff('s',startTime) * 1000;
+//          //  console.log('startTime='+startTime);
+//          //  console.log('timeout='+timeout);
             run();
             setInterval(run, 3600000);
-//            setTimeout(run,timeout);
-//            setTimeout(recurrentRun,timeout);
+//          //  setTimeout(run,timeout);
+//          //  setTimeout(recurrentRun,timeout);
         }
 
         function run(){

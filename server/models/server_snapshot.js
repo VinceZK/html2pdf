@@ -48,7 +48,7 @@ var transporter = nodemailer.createTransport({
     service: 'QQ',
     auth: {
         user: 'html2pdf@foxmail.com',
-        pass: 'Html1234'
+        pass: 'html1234'
     }
 });
 
