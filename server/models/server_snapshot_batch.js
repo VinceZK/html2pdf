@@ -125,7 +125,7 @@ module.exports = {
                 snapShot.JOB_GUID = pages[0].JOB_GUID;
                 snapShot.OPTIONS = eval("(" + pages[0].OPTIONS + ")");
                 snapShot.FINISH_TIME = pages[0].FINISH_TIME;
-                var fileSize = pages[0].PROCESS_MSG?eval("(" + pages[0].PROCESS_MSG + ")").size:null;
+                var fileSize = pages[0].PROCESS_MSG?eval("(" + pages[0].PROCESS_MSG + ")")["size"]:null;
                 if(fileSize)
                 snapShot.SIZE= fileSize<1048576?Math.ceil(fileSize/1024)+'KB':Math.ceil(fileSize/1048576)+'MB';
                 else
